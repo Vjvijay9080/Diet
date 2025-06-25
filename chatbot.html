@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .chat-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .chat-header {
+            background: #28a745;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        .chat-body {
+            height: 250px;
+            overflow-y: auto;
+            padding: 10px;
+            background: #f9f9f9;
+        }
+        .chat-footer {
+            display: flex;
+            padding: 5px;
+            background: white;
+        }
+        .chat-footer input {
+            flex: 1;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .chat-footer button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-left: 5px;
+        }
+        .chat-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .message {
+            padding: 5px;
+            margin: 5px;
+            border-radius: 5px;
+        }
+        .user-message {
+            background: #d4edda;
+            text-align: right;
+        }
+        .bot-message {
+            background: #e2e3e5;
+        }
+    </style>
+</head>
+<body>
+
+    <button class="chat-button" onclick="toggleChat()">💬</button>
+
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-header">FAQ Chatbot</div>
+        <div class="chat-body" id="chatBody">
+            <div class="bot-message message">Hello! Ask me anything about our diet plans.</div>
+        </div>
+        <div class="chat-footer">
+            <input type="text" id="userInput" placeholder="Type your question..." onkeypress="handleKeyPress(event)">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleChat() {
+            const chatBox = document.getElementById("chatContainer");
+            chatBox.style.display = chatBox.style.display === "none" || chatBox.style.display === "" ? "flex" : "none";
+        }
+
+        function sendMessage() {
+            let userInput = document.getElementById("userInput").value.trim();
+            if (userInput === "") return;
+
+            let chatBody = document.getElementById("chatBody");
+
+            // Display user message
+            let userMessage = document.createElement("div");
+            userMessage.className = "user-message message";
+            userMessage.innerText = userInput;
+            chatBody.appendChild(userMessage);
+
+            // Get chatbot response
+            let botResponse = getChatbotResponse(userInput);
+
+            // Display bot message
+            let botMessage = document.createElement("div");
+            botMessage.className = "bot-message message";
+            botMessage.innerText = botResponse;
+            chatBody.appendChild(botMessage);
+
+            // Scroll to the latest message
+            chatBody.scrollTop = chatBody.scrollHeight;
+
+            // Clear input field
+            document.getElementById("userInput").value = "";
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        }
+
+        function getChatbotResponse(question) {
+            const responses = {
+                "how do i lose weight": "You can lose weight by maintaining a calorie deficit and following a healthy diet plan.",
+                "do you offer vegan plans": "Yes! We have vegetarian and vegan meal plans tailored to your needs.",
+                "how can i track my progress": "You can use our BMI, calorie, and macronutrient calculators to track your progress.",
+                "what is the best diet for weight loss": "A balanced, calorie-controlled diet with a mix of protein, carbs, and healthy fats is ideal for weight loss.",
+                "how do i get started": "Simply sign up, choose your goal (weight loss, muscle gain, etc.), and start your personalized diet plan!"
+            };
+
+            let questionLower = question.toLowerCase();
+            return responses[questionLower] || "I'm not sure about that. Try asking something related to diet plans!";
+        }
+    </script>
+
+</body>
+</html>
