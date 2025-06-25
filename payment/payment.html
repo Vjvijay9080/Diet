@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diet Plan Payment</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Diet Plan Payment</h2>
+
+        <form action="process_payment.php" method="POST" onsubmit="return validateForm();">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+            <h3>Select Payment Method</h3>
+            <div class="payment-methods">
+                <label><input type="radio" name="payment" value="paytm" onchange="showPaymentFields()"> Paytm</label>
+                <label><input type="radio" name="payment" value="gpay" onchange="showPaymentFields()"> Google Pay (GPay)</label>
+                <label><input type="radio" name="payment" value="credit" onchange="showPaymentFields()"> Credit Card</label>
+                <label><input type="radio" name="payment" value="debit" onchange="showPaymentFields()"> Debit Card</label>
+                <label><input type="radio" name="payment" value="netbanking" onchange="showPaymentFields()"> Net Banking</label>
+                <label><input type="radio" name="payment" value="giftcard" onchange="showPaymentFields()"> Gift Card</label>
+            </div>
+
+            <!-- UPI Payment Fields -->
+            <div id="upi-fields" class="hidden">
+                <label for="upi-id">UPI ID</label>
+                <input type="text" id="upi-id" name="upi_id" placeholder="Enter your UPI ID">
+            </div>
+
+            <!-- Card Payment Fields -->
+            <div id="card-fields" class="hidden">
+                <label for="card-number">Card Number</label>
+                <input type="text" id="card-number" name="card_number" placeholder="1234 5678 9012 3456">
+                
+                <label for="exp-date">Expiration Date</label>
+                <input type="month" id="exp-date" name="exp_date">
+                
+                <label for="cvv">CVV</label>
+                <input type="text" id="cvv" name="cvv" placeholder="123">
+            </div>
+
+            <!-- Net Banking Fields -->
+            <div id="netbanking-fields" class="hidden">
+                <label for="bank">Select Bank</label>
+                <select id="bank" name="bank">
+                    <option value="">--Select Bank--</option>
+                    <option value="HDFC">HDFC Bank</option>
+                    <option value="ICICI">ICICI Bank</option>
+                    <option value="SBI">State Bank of India</option>
+                    <option value="Axis">Axis Bank</option>
+                </select>
+            </div>
+
+            <!-- Gift Card Fields -->
+            <div id="giftcard-fields" class="hidden">
+                <label for="gift-card">Gift Card Number</label>
+                <input type="text" id="gift-card" name="gift_card" placeholder="Enter Gift Card Number">
+            </div>
+
+            <button type="submit" class="checkout-btn">Complete Payment</button>
+        </form>
+    </div>
+
+</body>
+</html>
